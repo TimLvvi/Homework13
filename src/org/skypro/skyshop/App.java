@@ -1,18 +1,21 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
-        Product product1 = new Product("хлеб", 120);
-        Product product2 = new Product("батон", 100);
-        Product product3 = new Product("масло", 250);
-        Product product4 = new Product("шоколад", 150);
-        Product product5 = new Product("чипсы", 200);
-        Product product6 = new Product("жвачка", 40);
+        Product product1 = new SimpleProduct("хлеб", 130);
+        Product product2 = new DiscountedProduct("батон", 120, 40);
+        Product product3 = new FixPriceProduct("масло");
+        Product product4 = new DiscountedProduct("шоколад", 160, 50);
+        Product product5 = new SimpleProduct("чипсы", 200);
+        Product product6 = new SimpleProduct("жвачка", 40);
 
 
         ProductBasket productBasket = new ProductBasket();
@@ -41,7 +44,7 @@ public class App {
 
         //5.Поиск товара, который есть в корзине.
         //6.Поиск товара, которого нет в корзине.
-        boolean productAvailabilityChips = productBasket.findProductName("чипсы");
+        boolean productAvailabilityChips = productBasket.findProductName("хлеб");
         System.out.println();
 
         //7.Очистка корзины.
