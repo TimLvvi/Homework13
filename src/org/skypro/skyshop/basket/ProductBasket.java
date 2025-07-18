@@ -32,12 +32,27 @@ public class ProductBasket {
         return sum;
     }
 
+    //Метод для подсчета количества специальных товаров
+    public int countSpecialProduct() {
+        int count = 0;
+        for (Product product : basket) {
+            if (product != null) {
+                if (product.isSpecial() == true) {
+                    count = count + 1;
+                }
+
+            }
+        }
+        return count;
+    }
+
 
     //Метод, который печатает содержимое корзины: метод ничего не принимает и не возвращает, но печатает в консоль сообщение вида:
     //<имя продукта>: <стоимость>
     //<имя продукта>: <стоимость>
     //<имя продукта>: <стоимость>
     //Итого: <общая стоимость корзины>
+    //Специальных товаров: <Количество специальных товаров>
     public void printBasket() {
         int sum = sumProductBasket();
         if (sum == 0) {
@@ -47,10 +62,11 @@ public class ProductBasket {
 
         for (Product product : basket) {
             if (product != null) {
-                System.out.println(product.getName() + ": " + product.getPrice());
+                System.out.println(product.toString());
             }
         }
         System.out.println("Итого: " + sum);
+        System.out.println("Специальных товаров: " + countSpecialProduct());
     }
 
 
