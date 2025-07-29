@@ -1,10 +1,12 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.articlesProducts.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.Arrays;
 
@@ -62,5 +64,45 @@ public class App {
         //10.Поиск товара по имени в пустой корзине.
         boolean productAvailabilityBread = productBasket.findProductName("хлеб");
         System.out.println();
+
+
+        Article article1 = new Article("что такое хлеб", "хлеб — пищевой продукт, получаемый выпечкой разрыхлённого посредством дрожжей или закваски теста");
+        Article article2 = new Article("польза шоколада", " шоколад изготавливается из какао-бобов, которые являются источником полезных веществ");
+        Article article3 = new Article("чипсы и их состав", "чипсы могут изготавливать из тонких ломтиков картофеля или из сухого картофельного пюре в виде хлопьев, крупы или гранул");
+
+        //проверка
+        System.out.println(product1.getStringRepresentation());
+        System.out.println(article1.getStringRepresentation());
+        System.out.println();
+
+        SearchEngine searchEngine = new SearchEngine(10);
+        searchEngine.add(product1);
+        searchEngine.add(product2);
+        searchEngine.add(product3);
+        searchEngine.add(product4);
+        searchEngine.add(product5);
+        searchEngine.add(product6);
+        searchEngine.add(article1);
+        searchEngine.add(article2);
+        searchEngine.add(article3);
+
+        //проверка
+        System.out.println(searchEngine.toString());
+        System.out.println();
+
+
+        // Тестируем поиск
+        System.out.println("Результаты поиска по 'хлеб':");
+        System.out.println(Arrays.toString(searchEngine.search("хлеб")));
+        System.out.println();
+
+        System.out.println("Результаты поиска по 'шоколад':");
+        System.out.println(Arrays.toString(searchEngine.search("шоколад")));
+        System.out.println();
+
+        System.out.println("Результаты поиска по 'чипсы':");
+        System.out.println(Arrays.toString(searchEngine.search("чипсы")));
+        System.out.println();
+
     }
 }
