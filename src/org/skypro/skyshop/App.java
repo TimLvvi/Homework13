@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.Arrays;
@@ -66,7 +67,7 @@ public class App {
         System.out.println();
 
 
-        Article article1 = new Article("что такое хлеб", "хлеб — пищевой продукт, получаемый выпечкой разрыхлённого посредством дрожжей или закваски теста");
+        Article article1 = new Article("что такое хлеб и почему хлеб вкусный", "хлеб — пищевой продукт, получаемый выпечкой разрыхлённого посредством дрожжей или закваски теста");
         Article article2 = new Article("польза шоколада", " шоколад изготавливается из какао-бобов, которые являются источником полезных веществ");
         Article article3 = new Article("чипсы и их состав", "чипсы могут изготавливать из тонких ломтиков картофеля или из сухого картофельного пюре в виде хлопьев, крупы или гранул");
 
@@ -104,5 +105,41 @@ public class App {
         System.out.println(Arrays.toString(searchEngine.search("чипсы")));
         System.out.println();
 
+        //Демонстрация проверки данных в классе main
+        try {
+            Product product7 = new SimpleProduct(" ", 2000);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+        System.out.println();
+
+        try {
+            Product product8 = new SimpleProduct("курица филе", 0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+        System.out.println();
+
+        try {
+            Product product9 = new DiscountedProduct("филе ментая", 600, 120);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+        System.out.println();
+
+
+        // ищем самый подходящий продукт
+        try {
+            System.out.println(searchEngine.findBestResult("хлеб"));
+        } catch (BestResultNotFound ex) {
+            System.out.println(ex.getMessage());
+        }
+        System.out.println();
+
+        try {
+            System.out.println(searchEngine.findBestResult("леска"));
+        } catch (BestResultNotFound ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
