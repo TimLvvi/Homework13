@@ -54,17 +54,17 @@ public class ProductBasket {
     //Итого: <общая стоимость корзины>
     //Специальных товаров: <Количество специальных товаров>
     public void printBasket() {
-        int sum = sumProductBasket();
-        if (sum == 0) {
-            System.out.println("корзина пустая");
-            return;
-        }
-
-        for (Product product : basket) {
-            if (product != null) {
-                System.out.println(product.toString());
+            int sum = sumProductBasket();
+            if (sum == 0) {
+                System.out.println("корзина пустая");
+                return;
             }
-        }
+
+            for (Product product : basket) {
+                if (product != null) {
+                    System.out.println(product.toString());
+                }
+            }
         System.out.println("Итого: " + sum);
         System.out.println("Специальных товаров: " + countSpecialProduct());
     }
