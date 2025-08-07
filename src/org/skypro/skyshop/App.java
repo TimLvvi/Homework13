@@ -6,7 +6,7 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
-import org.skypro.skyshop.search.BestResultNotFound;
+import org.skypro.skyshop.search.BestResultNotFoundException;
 import org.skypro.skyshop.search.SearchEngine;
 
 import java.util.Arrays;
@@ -131,14 +131,14 @@ public class App {
         // ищем самый подходящий продукт
         try {
             System.out.println(searchEngine.findBestResult("хлеб"));
-        } catch (BestResultNotFound ex) {
+        } catch (BestResultNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println();
 
         try {
             System.out.println(searchEngine.findBestResult("леска"));
-        } catch (BestResultNotFound ex) {
+        } catch (BestResultNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
     }

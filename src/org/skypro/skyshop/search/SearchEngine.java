@@ -39,25 +39,25 @@ public class SearchEngine {
     }
 
     // метод возврата наиболее подходящего продукта (или статьи) по запросу
-    public Searchable findBestResult(String search) throws BestResultNotFound {
+    public Searchable findBestResult(String search) throws BestResultNotFoundException {
         if (search == null || search.isBlank()) {
-            throw new BestResultNotFound(search);
+            throw new BestResultNotFoundException(search);
         }
-        Searchable BestResult = null;
+        Searchable bestResult = null;
         int maxSubstringFind = 0;
         for (Searchable searchable : searchables) {
             if (searchable != null) {
                 int count = countSubstringOccurrences(searchable.searchTerm(), search);
                 if (count > maxSubstringFind) {
                     maxSubstringFind = count;
-                    BestResult = searchable;
+                    bestResult = searchable;
                 }
             }
         }
-        if (BestResult == null) {
-            throw new BestResultNotFound(search);
+        if (bestResult == null) {
+            throw new BestResultNotFoundException(search);
         }
-        return BestResult;
+        return bestResult;
     }
 
 
