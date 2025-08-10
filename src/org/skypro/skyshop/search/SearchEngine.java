@@ -1,42 +1,32 @@
 package org.skypro.skyshop.search;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class SearchEngine {
-    private Searchable[] searchables;
-    private int currentIndex = 0;
+    private LinkedList<Searchable> searchables = new LinkedList<>();
 
-    public SearchEngine(int capacity) {
-        this.searchables = new Searchable[capacity];
-    }
 
     // Добавление элемента для поиска
     public void add(Searchable searchable) {
-        if (currentIndex < searchables.length) {
-            searchables[currentIndex++] = searchable;
-        }
+        searchables.add(searchable);
     }
 
     // Поиск по запросу
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int foundCount = 0;
+    public LinkedList<Searchable> search(String query) {
+        LinkedList<Searchable> results = new LinkedList<>();
+
 
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                results[foundCount++] = searchable;
-                if (foundCount == 5) {
-                    break;
-                }
+                results.add(searchable);
+
             }
         }
+
         return results;
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(searchables);
-    }
 
     // метод возврата наиболее подходящего продукта (или статьи) по запросу
     public Searchable findBestResult(String search) throws BestResultNotFoundException {
@@ -78,6 +68,14 @@ public class SearchEngine {
         }
 
         return count;
+
+    }
+
+    @Override
+    public String toString() {
+        return "SearchEngine{" +
+                "searchables=" + searchables +
+                '}';
     }
 }
 

@@ -8,8 +8,11 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.BestResultNotFoundException;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -31,9 +34,7 @@ public class App {
         productBasket.addBasket(product5);
         System.out.println();
 
-        //2.Добавление продукта в заполненную корзину, в которой нет свободного места.
-        productBasket.addBasket(product6);
-        System.out.println();
+
 
         //Получение стоимости корзины.
         int sum = productBasket.sumProductBasket();
@@ -50,7 +51,7 @@ public class App {
         boolean productAvailabilityChips = productBasket.findProductName("хлеб");
         System.out.println();
 
-        //7.Очистка корзины.
+//        7.Очистка корзины.
         productBasket.cleanBasket();
 
         //8. Печать содержимого пустой корзины.
@@ -76,7 +77,7 @@ public class App {
         System.out.println(article1.getStringRepresentation());
         System.out.println();
 
-        SearchEngine searchEngine = new SearchEngine(10);
+        SearchEngine searchEngine = new SearchEngine();
         searchEngine.add(product1);
         searchEngine.add(product2);
         searchEngine.add(product3);
@@ -94,15 +95,15 @@ public class App {
 
         // Тестируем поиск
         System.out.println("Результаты поиска по 'хлеб':");
-        System.out.println(Arrays.toString(searchEngine.search("хлеб")));
+        System.out.println(searchEngine.search("хлеб"));
         System.out.println();
 
         System.out.println("Результаты поиска по 'шоколад':");
-        System.out.println(Arrays.toString(searchEngine.search("шоколад")));
+        System.out.println(searchEngine.search("шоколад"));
         System.out.println();
 
         System.out.println("Результаты поиска по 'чипсы':");
-        System.out.println(Arrays.toString(searchEngine.search("чипсы")));
+        System.out.println(searchEngine.search("чипсы"));
         System.out.println();
 
         //Демонстрация проверки данных в классе main
@@ -141,5 +142,44 @@ public class App {
         } catch (BestResultNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+        System.out.println();
+
+
+        ProductBasket productBasket1 = new ProductBasket();
+
+        //1.Добавление продукта в корзину.
+        productBasket1.addBasket(product1);
+        productBasket1.addBasket(product2);
+        productBasket1.addBasket(product3);
+        productBasket1.addBasket(product4);
+        productBasket1.addBasket(product5);
+        productBasket1.addBasket(product3);
+        productBasket1.addBasket(product6);
+
+        productBasket1.printBasket();
+        System.out.println();
+
+
+        //Удалить существующий продукт из корзины.
+         List<Product> deleteProductOil = productBasket1.deleteProductFromBasket("масло");
+        System.out.println();
+
+        //Вывести удаленные продукты на экран.
+        System.out.println(deleteProductOil);
+        System.out.println();
+
+        //Вывести содержимое корзины с помощью метода printBacket
+        productBasket1.printBasket();
+        System.out.println();
+
+
+//        Удалить несуществующий продукт.
+//        Проверить, что список удаленных продуктов пустой и вывести сообщение “Список пуст”.
+        productBasket1.deleteProductFromBasket("огурец");
+        System.out.println();
+
+        //Вывести содержимое корзины на экран.
+        System.out.println(productBasket1);
+        System.out.println();
     }
 }

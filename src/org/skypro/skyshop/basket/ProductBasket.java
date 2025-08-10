@@ -3,21 +3,17 @@ package org.skypro.skyshop.basket;
 import org.skypro.skyshop.product.Product;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProductBasket {
-    private Product[] basket = new Product[5];
+    private List<Product> basket = new LinkedList<>();
 
 
     //Метод добавления продукта в корзину: метод принимает в себя продукт и ничего не возвращает.
     public void addBasket(Product addProduct) {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                basket[i] = addProduct;
-                return;
-            }
-
-        }
-        System.out.println("Товар " + addProduct.getName() + " не добавлен в корзину. Корзина забита.");
+        basket.add(addProduct);
     }
 
 
@@ -54,17 +50,17 @@ public class ProductBasket {
     //Итого: <общая стоимость корзины>
     //Специальных товаров: <Количество специальных товаров>
     public void printBasket() {
-            int sum = sumProductBasket();
-            if (sum == 0) {
-                System.out.println("корзина пустая");
-                return;
-            }
+        int sum = sumProductBasket();
+        if (sum == 0) {
+            System.out.println("корзина пустая");
+            return;
+        }
 
-            for (Product product : basket) {
-                if (product != null) {
-                    System.out.println(product.toString());
-                }
+        for (Product product : basket) {
+            if (product != null) {
+                System.out.println(product.toString());
             }
+        }
         System.out.println("Итого: " + sum);
         System.out.println("Специальных товаров: " + countSpecialProduct());
     }
@@ -95,9 +91,30 @@ public class ProductBasket {
     //Метод очистки корзины: метод ничего не принимает и очищает массив, проставляя всем его элементам null
 
     public void cleanBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
+        basket.clear();
+    }
+
+
+    public List<Product> deleteProductFromBasket(String nameProductDelete) {
+        List<Product> deleteProduct = new LinkedList<>();
+
+        Iterator<Product> iterator = basket.iterator();
+        while (iterator.hasNext()) {
+            Product element = iterator.next();
+            if (nameProductDelete.equals(element.getName())) {
+                deleteProduct.add(element);
+                iterator.remove();
+            }
         }
+        if (deleteProduct.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+        return deleteProduct;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductBasket " + basket;
     }
 }
 
