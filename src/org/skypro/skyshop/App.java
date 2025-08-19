@@ -35,7 +35,6 @@ public class App {
         System.out.println();
 
 
-
         //Получение стоимости корзины.
         int sum = productBasket.sumProductBasket();
         System.out.println("Cумма продуктов в корзине: " + sum);
@@ -161,7 +160,7 @@ public class App {
 
 
         //Удалить существующий продукт из корзины.
-         List<Product> deleteProductOil = productBasket1.deleteProductFromBasket("масло");
+        List<List<Product>> deleteProductOil = productBasket1.deleteProductFromBasket("масло");
         System.out.println();
 
         //Вывести удаленные продукты на экран.
