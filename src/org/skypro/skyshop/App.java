@@ -160,7 +160,7 @@ public class App {
 
 
         //Удалить существующий продукт из корзины.
-        List<List<Product>> deleteProductOil = productBasket1.deleteProductFromBasket("масло");
+        List<Product> deleteProductOil = productBasket1.deleteProductFromBasket("масло");
         System.out.println();
 
         //Вывести удаленные продукты на экран.

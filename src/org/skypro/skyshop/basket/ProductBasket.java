@@ -5,12 +5,12 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private Map<String, LinkedList<Product>> basket = new TreeMap<>();
+    private Map<String, List<Product>> basket = new TreeMap<>();
 
 
     //Метод добавления продукта в корзину: метод принимает в себя продукт и ничего не возвращает.
     public void addBasket(Product addProduct) {
-        LinkedList<Product> products;
+        List<Product> products;
         if (!basket.containsKey(addProduct.getName())) {
             products = new LinkedList<>();
             basket.put(addProduct.getName(), products);
@@ -25,7 +25,7 @@ public class ProductBasket {
     //Метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
     public int sumProductBasket() {
         int sum = 0;
-        for (LinkedList<Product> basket : basket.values()) {
+        for (List<Product> basket : basket.values()) {
             for (Product product : basket) {
                 if (product != null) {
                     sum = sum + product.getPrice();
@@ -38,13 +38,10 @@ public class ProductBasket {
     //Метод для подсчета количества специальных товаров
     public int countSpecialProduct() {
         int count = 0;
-        for (LinkedList<Product> basket : basket.values()) {
+        for (List<Product> basket : basket.values()) {
             for (Product product : basket) {
-                if (product != null) {
-                    if (product.isSpecial() == true) {
-                        count = count + 1;
-                    }
-
+                if (product != null & product.isSpecial() == true) {
+                    count = count + 1;
                 }
             }
         }
@@ -65,7 +62,7 @@ public class ProductBasket {
             return;
         }
 
-        for (LinkedList<Product> basket : basket.values())
+        for (List<Product> basket : basket.values())
             for (Product product : basket) {
                 if (product != null) {
                     System.out.println(product.toString());
@@ -102,16 +99,16 @@ public class ProductBasket {
     }
 
     // метод удалющий продукт из корзины.
-    public List<List<Product>> deleteProductFromBasket(String nameProductDelete) {
-        List<List<Product>> deleteProduct = new LinkedList<>();
-
-        if (basket.containsKey(nameProductDelete)) {
-            deleteProduct.add(basket.get(nameProductDelete));
-            basket.remove(nameProductDelete);
-        }
+    public List<Product> deleteProductFromBasket(String nameProductDelete) {
+        List<Product> deleteProduct = new LinkedList<>();
 
         if (!basket.containsKey(nameProductDelete)) {
-            System.out.println(nameProductDelete + "в списке не найден");
+            System.out.println(nameProductDelete + " в списке не найден");
+        }
+
+        if (basket.containsKey(nameProductDelete)) {
+            deleteProduct = basket.get(nameProductDelete);
+            basket.remove(nameProductDelete);
         }
 
         if (basket.isEmpty()) {
