@@ -1,10 +1,9 @@
 package org.skypro.skyshop.search;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 
 public class SearchEngine {
-    private LinkedList<Searchable> searchables = new LinkedList<>();
+    private List<Searchable> searchables = new LinkedList<>();
 
 
     // Добавление элемента для поиска
@@ -13,13 +12,13 @@ public class SearchEngine {
     }
 
     // Поиск по запросу
-    public LinkedList<Searchable> search(String query) {
-        LinkedList<Searchable> results = new LinkedList<>();
+    public Map<String, Searchable> search(String query) {
+        Map<String, Searchable> results = new TreeMap<>();
 
 
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                results.add(searchable);
+                results.put(searchable.searchTerm(), searchable);
 
             }
         }
