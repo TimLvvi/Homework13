@@ -3,7 +3,7 @@ package org.skypro.skyshop.search;
 import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searchables = new LinkedList<>();
+    private Set<Searchable> searchables = new HashSet<>();
 
 
     // Добавление элемента для поиска
@@ -12,20 +12,29 @@ public class SearchEngine {
     }
 
     // Поиск по запросу
-    public Map<String, Searchable> search(String query) {
-        Map<String, Searchable> results = new TreeMap<>();
-
-
+    public Set<Searchable> search(String query) {
+        Set<Searchable> results = new TreeSet<>(new LengthComparator());
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.searchTerm().contains(query)) {
-                results.put(searchable.searchTerm(), searchable);
-
+                results.add(searchable);
             }
         }
-
         return results;
     }
 
+
+    public static class LengthComparator implements Comparator<Searchable> {
+        @Override
+        public int compare(Searchable o1, Searchable o2) {
+            if (o1.searchTerm().length() > o2.searchTerm().length()) {
+                return -1;
+            }
+            if (o1.searchTerm().length() < o2.searchTerm().length()) {
+                return 1;
+            }
+            return o1.searchTerm().compareTo(o2.searchTerm());
+        }
+    }
 
     // метод возврата наиболее подходящего продукта (или статьи) по запросу
     public Searchable findBestResult(String search) throws BestResultNotFoundException {
