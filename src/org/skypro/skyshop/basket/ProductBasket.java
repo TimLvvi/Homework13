@@ -24,27 +24,21 @@ public class ProductBasket {
 
     //Метод получения общей стоимости корзины: метод ничего не принимает и возвращает целое число.
     public int sumProductBasket() {
-        int sum = 0;
-        for (List<Product> basket : basket.values()) {
-            for (Product product : basket) {
-                if (product != null) {
-                    sum = sum + product.getPrice();
-                }
-            }
-        }
+        int sum = basket.values().stream()
+                .flatMap(list -> list.stream())
+                .filter(product -> product != null)
+                .mapToInt(product -> product.getPrice())
+                .sum();
         return sum;
     }
 
     //Метод для подсчета количества специальных товаров
     public int countSpecialProduct() {
-        int count = 0;
-        for (List<Product> basket : basket.values()) {
-            for (Product product : basket) {
-                if (product != null & product.isSpecial() == true) {
-                    count = count + 1;
-                }
-            }
-        }
+        int count = (int) basket.values().stream()
+                .flatMap(list -> list.stream())
+                .filter(product -> product != null)
+                .filter(product -> product.isSpecial())
+                .count();
         return count;
     }
 
@@ -62,12 +56,11 @@ public class ProductBasket {
             return;
         }
 
-        for (List<Product> basket : basket.values())
-            for (Product product : basket) {
-                if (product != null) {
-                    System.out.println(product.toString());
-                }
-            }
+        basket.values().stream()
+                .flatMap(list -> list.stream())
+                .filter(product -> product != null)
+                .forEach(product -> System.out.println(product.toString()));
+
         System.out.println("Итого: " + sum);
         System.out.println("Специальных товаров: " + countSpecialProduct());
     }
@@ -117,23 +110,6 @@ public class ProductBasket {
         return deleteProduct;
     }
 
-
-//    public List<Product> deleteProductFromBasket(String nameProductDelete) {
-//        List<Product> deleteProduct = new LinkedList<>();
-//
-//        Iterator<Product> iterator = basket.iterator();
-//        while (iterator.hasNext()) {
-//            Product element = iterator.next();
-//            if (nameProductDelete.equals(element.getName())) {
-//                deleteProduct.add(element);
-//                iterator.remove();
-//            }
-//        }
-//        if (deleteProduct.isEmpty()) {
-//            System.out.println("Список пуст");
-//        }
-//        return deleteProduct;
-//    }
 
     @Override
     public String toString() {
